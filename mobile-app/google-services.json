@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1097113298957",
+    "firebase_url": "https://hania-9aaf2-default-rtdb.firebaseio.com",
+    "project_id": "hania-9aaf2",
+    "storage_bucket": "hania-9aaf2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1097113298957:android:c368723fcbffb05b7ecd44",
+        "android_client_info": {
+          "package_name": "com.hania.ride"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1097113298957-6om5oua0d4qtpnqq4sappsqols8du5vk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hania.ride",
+            "certificate_hash": "dec2cbb4f120ddfaa8a4bc904f587258a59e33bc"
+          }
+        },
+        {
+          "client_id": "1097113298957-m0fn0b5chg5at0qv1v4dm785dg60e5c8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAD4t7o8cyPubVXxOXoaomzWlDwheduQ_M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1097113298957-m0fn0b5chg5at0qv1v4dm785dg60e5c8.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1097113298957-18f38puigfvqdadpi64dnt8evbgpfpdo.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.hania.ride"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

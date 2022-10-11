@@ -1,0 +1,15 @@
+{
+    "cli": {
+      "version": ">= 0.34.0"
+    },
+    "submit": {
+      "production": {
+        
+        "ios": {
+          "appleId": "haniavitedz@gmail.com",
+          "ascAppId": "1623399728",
+          "appleTeamId": "358F2F6MA9"
+        }
+      }
+    }
+  }

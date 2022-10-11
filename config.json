@@ -1,0 +1,19 @@
+{
+    "app_name": "Hania",
+    "app_description": "Book your Ride",
+    "app_identifier": "com.hania.ride",
+    "ios_app_version": "1.1",
+    "andoid_app_version": "1.1",
+    "version": "1.1",
+    "android.versionCode":6,
+    "ios.buildNumber":6,
+    "facebookAppId": "588488772157214",
+    "firebaseProjectId": "hania-9aaf2",
+    "googleApiKeys": {
+        "ios": "AIzaSyDRrYOd2rCaBnZY4GaGnED_egwu65SWLi8",
+        "android": "AIzaSyAD4t7o8cyPubVXxOXoaomzWlDwheduQ_M",
+        "web": "AIzaSyBwmxTkIRWsOumW5yIOLasg8QDrVHGYYek",
+        "server": "AIzaSyBwmxTkIRWsOumW5yIOLasg8QDrVHGYYek"
+    },
+    "CodeCanyon_Purchase_Code": "32ff203f-930a-4143-8f79-413a1d03a744"
+}
