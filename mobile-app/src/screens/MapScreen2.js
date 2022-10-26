@@ -432,23 +432,27 @@ export default function MapScreen(props) {
             setFreeCars(availableDrivers);
             setAllCarTypes(carWiseArr);
         }
-    }
+    };
 
     const tapAddress = (selection) => {
+
+        console.log(tripdata.selected);
         if (selection === tripdata.selected) {
             let savedAddresses = [];
             let allAddresses = auth.info.profile.savedAddresses;
             for (let key in allAddresses) {
                 savedAddresses.push(allAddresses[key]);
             }
+            //console.log(savedAddresses);
             if (selection == 'drop') {
                 props.navigation.navigate('Search', { locationType: "drop", addParam: savedAddresses });
             } else {
                 props.navigation.navigate('Search', { locationType: "pickup", addParam: savedAddresses });
             }
         } else {
-            setDragging(0)
-            if (selection == 'drop' && tripdata.selected && tripdata.selected == 'pickup') {
+            setDragging(0);
+            if (selection == 'drop' && tripdata.selected && tripdata.selected == 'drop') {
+
                  mapRef.current.animateToRegion({
                     latitude: tripdata.drop.lat,
                     longitude: tripdata.drop.lng,
@@ -491,6 +495,8 @@ export default function MapScreen(props) {
                             break;
                         }
                     }
+
+
                     if (driver_available) {
                         setBookingDate(null);
                         setBookingType(false);

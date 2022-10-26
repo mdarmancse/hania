@@ -444,7 +444,7 @@ export default function MapScreen(props) {
             }
         } else {
             setDragging(0)
-            if (selection == 'drop' && tripdata.selected && tripdata.selected == 'pickup') {
+            if (selection == 'drop' && tripdata.selected && tripdata.selected == 'drop') {
                  mapRef.current.animateToRegion({
                     latitude: tripdata.drop.lat,
                     longitude: tripdata.drop.lng,
