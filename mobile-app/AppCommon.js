@@ -401,6 +401,7 @@ export default function AppCommon({ children }) {
             dispatch(api.monitorProfileChanges());
             dispatch(api.fetchDrivers());
             dispatch(api.fetchBookings(auth.info.uid, role));
+            dispatch(api.fetchBookingsLater(auth.info.uid, role));
             dispatch(api.fetchCancelReasons());
             dispatch(api.fetchPaymentMethods());
             dispatch(api.fetchPromos());
@@ -409,6 +410,7 @@ export default function AppCommon({ children }) {
           } else if (role === 'driver') {
             dispatch(api.monitorProfileChanges());
             dispatch(api.fetchBookings(auth.info.uid, role));
+            dispatch(api.fetchBookingsLater(auth.info.uid, role));
             dispatch(api.fetchPaymentMethods());
             dispatch(api.fetchTasks());
             dispatch(api.fetchUserNotifications());
@@ -442,10 +444,12 @@ export default function AppCommon({ children }) {
       if(role == 'driver' && authState.current == 'rider'){
         authState.current = 'driver';
         dispatch(api.fetchBookings(auth.info.uid, role));
+        dispatch(api.fetchBookingsLater(auth.info.uid, role));
         dispatch(api.fetchTasks());
       }
     }
   }, [auth.info]);
+
 
   useEffect(() => {
     if (api && languagedata && languagedata.langlist && auth.error && auth.error.msg && !auth.info && settings) {

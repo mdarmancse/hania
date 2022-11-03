@@ -490,10 +490,14 @@ export default function MapScreen(props) {
                     let driver_available = false;
                     for (let i = 0; i < allCarTypes.length; i++) {
                         let car = allCarTypes[i];
-                        if (car.name == tripdata.carType.name && car.minTime) {
+                        console.log(tripdata)
+                        console.log( car.minTime)
+                        // if (car.name == tripdata.carType.name && car.minTime) {
+
+
                             driver_available = true;
                             break;
-                        }
+                        // }
                     }
 
 
@@ -508,10 +512,18 @@ export default function MapScreen(props) {
                             const destLoc = tripdata.drop.lat + ',' + tripdata.drop.lng;
                             let routeDetails = null;
                             let waypoints = '';
+
+                            // console.log("JHG "+tripdata.drop.length)
+
+
                             try{
                                 if(tripdata.drop && tripdata.drop.waypoints && tripdata.drop.waypoints.length> 0 ){
                                     const origin = tripdata.pickup.lat + ',' + tripdata.pickup.lng;
+
+
                                     const arr = tripdata.drop.waypoints;
+
+                                    console.log('sd'+arr)
                                     for (let i = 0; i < arr.length; i++) {
                                         waypoints = waypoints + arr[i].lat + ',' +  arr[i].lng;
                                         if(i < arr.length - 1){

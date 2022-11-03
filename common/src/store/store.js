@@ -5,6 +5,7 @@ import thunk from "redux-thunk";
 import { authreducer as auth } from "../reducers/authreducer";
 import { cartypesreducer as cartypes } from "../reducers/cartypesreducer";
 import { bookingslistreducer as bookinglistdata } from "../reducers/bookingslistreducer";
+import { bookingLaterreducer as bookingLater } from "../reducers/bookingLaterreducer";
 import { estimatereducer as estimatedata } from "../reducers/estimatereducer";
 import { bookingreducer as bookingdata } from "../reducers/bookingreducer";
 import { cancelreasonreducer as cancelreasondata } from "../reducers/cancelreasonreducer";
@@ -27,6 +28,7 @@ const reducers = combineReducers({
   auth,
   cartypes,
   bookinglistdata,
+  bookingLater,
   estimatedata,
   bookingdata,
   cancelreasondata,

@@ -21,158 +21,95 @@ export default function Bklist(props) {
     }
     
     const renderData = ({ item, index }) => {
-        return (
-            <TouchableOpacity style={[styles.iconClickStyle,{flexDirection:isRTL?'row-reverse':'row'}]} onPress={() => onPressButton(item, index)}>
-                <View style={styles.iconViewStyle}>
-                    {appcat=='delivery'?
-                    <Icon
-                        name='truck-fast'
-                        type='material-community'
-                        color={colors.BLACK}
-                        size={35}
-                    />
-                    :
-                    <Icon
-                        name='car-sports'
-                        type='material-community'
-                        color={colors.HEADER}
-                        size={35}
-                    />
-                    }
-                </View>
-                <View style={[styles.flexViewStyle, isRTL?{flexDirection:'row-reverse',marginRight: 5}:{flexDirection:'row',marginLeft: 5}]}>
-                    <View style={styles.textView1}>
 
-                        <Text style={[styles.textStyle, styles.dateStyle,{textAlign:isRTL? "right":"left"}]}>{item.bookingDate ? moment(item.bookingDate).format('lll') : ''}</Text>
-                        <View style={[isRTL?{flexDirection:'row-reverse'}:{flexDirection:'row'}]}>
-                            <Text style={[styles.textStyle, styles.carNoStyle,{textAlign:isRTL? "right":"left"}]}> {isRTL? '-': null} {item.carType ? item.carType : null} {isRTL? null : '- '}</Text>
-                            <Text style={[styles.textStyle, styles.carNoStyle,{textAlign:isRTL? "right":"left"}]}>{item.vehicle_number ? item.vehicle_number : t('no_car_assign_text')}</Text>
-                        </View>
-                        <View style={[styles.picupStyle, styles.position,{flexDirection:isRTL?'row-reverse':'row'}]}>
+        if (item.bookLater == true && item.status == 'NEW' ) {
 
-                            <View style={styles.greenDot} />
-                            <Text style={[styles.picPlaceStyle, styles.placeStyle, isRTL?{textAlign:"right",marginRight:10}:{textAlign:"left",marginLeft:10}]}>{item.pickup ? item.pickup.add : t('not_found_text')}</Text>
-                        </View>
-                        <View style={[styles.dropStyle, styles.textViewStyle,{flexDirection:isRTL?'row-reverse':'row'}]}>
-                            <View style={[styles.redDot, styles.textPosition]} />
-                            <Text style={[styles.dropPlaceStyle, styles.placeStyle, isRTL?{textAlign:"right",marginRight:10}:{textAlign:"left",marginLeft:10}]}>{item.drop ? item.drop.add : t('not_found_text')}</Text>
-                        </View>
 
-                    </View>
-                    <View style={styles.textView2}>
-                        <Text style={[styles.fareStyle, styles.dateStyle,{textAlign:isRTL? "right":"left"}]}>{item.status == 'NEW' || item.status == 'PAYMENT_PENDING'? t(item.status) : null}</Text>
-                        {settings.swipe_symbol===false?
-                            <Text style={[styles.fareStyle, styles.dateStyle,{textAlign:isRTL? "right":"left"}]}>{item.status == 'PAID' || item.status == 'COMPLETE'? item.customer_paid ? settings.symbol + parseFloat(item.customer_paid).toFixed(settings.decimal) : settings.symbol + parseFloat(item.estimate).toFixed(settings.decimal) : null}</Text>
+            // console.log(item)
+            return (
+                <TouchableOpacity style={[styles.iconClickStyle, {flexDirection: isRTL ? 'row-reverse' : 'row'}]}
+                                  onPress={() => onPressButton(item, index)}>
+                    <View style={styles.iconViewStyle}>
+                        {appcat == 'delivery' ?
+                            <Icon
+                                name='truck-fast'
+                                type='material-community'
+                                color={colors.BLACK}
+                                size={35}
+                            />
                             :
-                            <Text style={[styles.fareStyle, styles.dateStyle,{textAlign:isRTL? "right":"left"}]}>{item.status == 'PAID' || item.status == 'COMPLETE'? item.customer_paid ? parseFloat(item.customer_paid).toFixed(settings.decimal) + settings.symbol  : parseFloat(item.estimate).toFixed(settings.decimal) + settings.symbol : null}</Text>
-                        }
-                        {
-                            item.status == 'CANCELLED' ?
-                                <Image
-                                    style={[styles.cancelImageStyle, isRTL?{marginLeft:20, alignSelf: 'flex-start'}:{marginRight: 20, alignSelf: 'flex-end'}]}
-                                    source={require('../../assets/images/cancel.png')}
-                                />
-                                :
-                                null
+                            <Icon
+                                name='car-sports'
+                                type='material-community'
+                                color={colors.HEADER}
+                                size={35}
+                            />
                         }
                     </View>
-                </View>
-            </TouchableOpacity>
+                    <View style={[styles.flexViewStyle, isRTL ? {
+                        flexDirection: 'row-reverse',
+                        marginRight: 5
+                    } : {flexDirection: 'row', marginLeft: 5}]}>
+                        <View style={styles.textView1}>
 
-        )
+                            <Text
+                                style={[styles.textStyle, styles.dateStyle, {textAlign: isRTL ? "right" : "left"}]}>{item.bookingDate ? moment(item.bookingDate).format('lll') : ''}</Text>
+                            <View style={[isRTL ? {flexDirection: 'row-reverse'} : {flexDirection: 'row'}]}>
+                                <Text
+                                    style={[styles.textStyle, styles.carNoStyle, {textAlign: isRTL ? "right" : "left"}]}> {isRTL ? '-' : null} {item.carType ? item.carType : null} {isRTL ? null : '- '}</Text>
+                                <Text
+                                    style={[styles.textStyle, styles.carNoStyle, {textAlign: isRTL ? "right" : "left"}]}>{item.vehicle_number ? item.vehicle_number : t('no_car_assign_text')}</Text>
+                            </View>
+                            <View
+                                style={[styles.picupStyle, styles.position, {flexDirection: isRTL ? 'row-reverse' : 'row'}]}>
+
+                                <View style={styles.greenDot}/>
+                                <Text style={[styles.picPlaceStyle, styles.placeStyle, isRTL ? {
+                                    textAlign: "right",
+                                    marginRight: 10
+                                } : {
+                                    textAlign: "left",
+                                    marginLeft: 10
+                                }]}>{item.pickup ? item.pickup.add : t('not_found_text')}</Text>
+                            </View>
+                            <View
+                                style={[styles.dropStyle, styles.textViewStyle, {flexDirection: isRTL ? 'row-reverse' : 'row'}]}>
+                                <View style={[styles.redDot, styles.textPosition]}/>
+                                <Text style={[styles.dropPlaceStyle, styles.placeStyle, isRTL ? {
+                                    textAlign: "right",
+                                    marginRight: 10
+                                } : {
+                                    textAlign: "left",
+                                    marginLeft: 10
+                                }]}>{item.drop ? item.drop.add : t('not_found_text')}</Text>
+                            </View>
+
+                        </View>
+                        <View style={styles.textView2}>
+                            <TouchableOpacity onPress={() => SendMsg()}>
+                                <Text style={styles.accept}>Accept</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </TouchableOpacity>
+
+            )
+
+        }
     }
 
        
     return (
         <View style={styles.textView3}>
-            <View style={[styles.scrollViewStyle, { flexDirection: isRTL ? 'row-reverse' : 'row' }]}>
-                {/*<Text style={styles.profStyle}>{t('price')}</Text>*/}
-                {/*<Text style={styles.profStyle}>{t('arrival')}</Text>*/}
-                {/*<Text style={styles.profStyle}>{t('departure')}</Text>*/}
 
-                <Text style={styles.profStyle}>1</Text>
-                <Text style={styles.profStyle}>$120</Text>
-                <Text style={styles.profStyle}>12:30 PM</Text>
-                <Text style={styles.profStyle}>2:30 PM</Text>
-                <Icon
-                    name='check'
-                    type='foundation'
-                    color={colors.PROFILE_PLACEHOLDER_CONTENT}
-                    containerStyle={{ right: 20 }}
-                    // onPress={editProfile}
-                />
-            </View>
-            <View style={[styles.scrollViewStyle, { flexDirection: isRTL ? 'row-reverse' : 'row' }]}>
-                {/*<Text style={styles.profStyle}>{t('price')}</Text>*/}
-                {/*<Text style={styles.profStyle}>{t('arrival')}</Text>*/}
-                {/*<Text style={styles.profStyle}>{t('departure')}</Text>*/}
+            <FlatList
+                keyExtractor={(item, index) => index.toString()}
+                data={tabIndex===0? props.data.filter(item=> !(item.status==='CANCELLED' || item.status==='COMPLETE')) : ( tabIndex === 1? props.data.filter(item=>item.status==='COMPLETE') : props.data.filter(item=>item.status==='CANCELLED') )}
+                renderItem={renderData}
 
-                <Text style={styles.profStyle}>2</Text>
-                <Text style={styles.profStyle}>$120</Text>
-                <Text style={styles.profStyle}>12:30 PM</Text>
-                <Text style={styles.profStyle}>2:30 PM</Text>
-                <Icon
-                    name='check'
-                    type='foundation'
-                    color={colors.PROFILE_PLACEHOLDER_CONTENT}
-                    containerStyle={{ right: 20 }}
-                    // onPress={editProfile}
-                />
-            </View>
-            <View style={[styles.scrollViewStyle, { flexDirection: isRTL ? 'row-reverse' : 'row' }]}>
-                {/*<Text style={styles.profStyle}>{t('price')}</Text>*/}
-                {/*<Text style={styles.profStyle}>{t('arrival')}</Text>*/}
-                {/*<Text style={styles.profStyle}>{t('departure')}</Text>*/}
-
-                <Text style={styles.profStyle}>3</Text>
-                <Text style={styles.profStyle}>$120</Text>
-                <Text style={styles.profStyle}>12:30 PM</Text>
-                <Text style={styles.profStyle}>2:30 PM</Text>
-                <Icon
-                    name='check'
-                    type='foundation'
-                    color={colors.PROFILE_PLACEHOLDER_CONTENT}
-                    containerStyle={{ right: 20 }}
-                    // onPress={editProfile}
-                />
-            </View>
-            <View style={[styles.scrollViewStyle, { flexDirection: isRTL ? 'row-reverse' : 'row' }]}>
-                {/*<Text style={styles.profStyle}>{t('price')}</Text>*/}
-                {/*<Text style={styles.profStyle}>{t('arrival')}</Text>*/}
-                {/*<Text style={styles.profStyle}>{t('departure')}</Text>*/}
-
-                <Text style={styles.profStyle}>4</Text>
-                <Text style={styles.profStyle}>$120</Text>
-                <Text style={styles.profStyle}>12:30 PM</Text>
-                <Text style={styles.profStyle}>2:30 PM</Text>
-                <Icon
-                    name='check'
-                    type='foundation'
-                    color={colors.PROFILE_PLACEHOLDER_CONTENT}
-                    containerStyle={{ right: 20 }}
-                    // onPress={editProfile}
-                />
-            </View>
-            <View style={[styles.scrollViewStyle, { flexDirection: isRTL ? 'row-reverse' : 'row' }]}>
-                {/*<Text style={styles.profStyle}>{t('price')}</Text>*/}
-                {/*<Text style={styles.profStyle}>{t('arrival')}</Text>*/}
-                {/*<Text style={styles.profStyle}>{t('departure')}</Text>*/}
-
-                <Text style={styles.profStyle}>5</Text>
-                <Text style={styles.profStyle}>$120</Text>
-                <Text style={styles.profStyle}>12:30 PM</Text>
-                <Text style={styles.profStyle}>2:30 PM</Text>
-                <Icon
-                    name='check'
-                    type='foundation'
-                    color={colors.PROFILE_PLACEHOLDER_CONTENT}
-                    containerStyle={{ right: 20 }}
-                    // onPress={editProfile}
-                />
-            </View>
-
-
+            />
         </View>
+
     );
 
 };
@@ -299,5 +236,16 @@ const styles = StyleSheet.create({
         marginTop: 0,
         alignSelf: "center",
         height: 50
-    }
+    },
+    accept: {
+        fontFamily: 'Roboto-Regular',
+        alignSelf: 'center',
+        color: 'black',
+        fontSize: 16,
+        fontWeight: 'bold',
+        padding: 7,
+        textTransform:'uppercase',
+        backgroundColor: colors.BACKGROUND_PRIMARY,
+        borderRadius:5
+    },
 });

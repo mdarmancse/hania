@@ -29,6 +29,7 @@ function AuthLoading(props) {
     fetchCarTypes,
     fetchSettings,
     fetchBookings,
+    fetchBookingsLater,
     fetchCancelReasons,
     fetchPromos,
     fetchDriverEarnings,
@@ -95,14 +96,17 @@ function AuthLoading(props) {
         let role = auth.info.profile.usertype;
         if (role === "rider") {
           dispatch(fetchBookings(auth.info.uid, role));
+          dispatch(fetchBookingsLater(auth.info.uid, role));
           dispatch(fetchPaymentMethods());
           dispatch(fetchCancelReasons());
           dispatch(fetchUsers());
         } else if (role === "driver") {
           dispatch(fetchBookings(auth.info.uid, role));
+          dispatch(fetchBookingsLater(auth.info.uid, role));
         } else if (role === "admin") {
           dispatch(fetchUsers());
           dispatch(fetchBookings(auth.info.uid, role));
+          dispatch(fetchBookingsLater(auth.info.uid, role));
           dispatch(fetchPromos());
           dispatch(fetchDriverEarnings(auth.info.uid, role));
           dispatch(fetchNotifications());
@@ -113,6 +117,7 @@ function AuthLoading(props) {
         } else if (role === "fleetadmin") {
           dispatch(fetchUsers());
           dispatch(fetchBookings(auth.info.uid, role));
+          dispatch(fetchBookingsLater(auth.info.uid, role));
           dispatch(fetchDriverEarnings(auth.info.uid, role));
         } else {
           alert(t("not_valid_user_type"));
@@ -127,6 +132,7 @@ function AuthLoading(props) {
     auth.info,
     dispatch,
     fetchBookings,
+    fetchBookingsLater,
     fetchCancelReasons,
     fetchDriverEarnings,
     fetchEarningsReport,

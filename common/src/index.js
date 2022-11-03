@@ -33,6 +33,12 @@ import {
     cancelBooking,
     updateBookingImage
 } from './actions/bookinglistactions';
+import {
+    fetchBookingsLater,
+    updateBookingLater,
+    cancelBookingLater,
+    updateBookingLaterImage
+} from './actions/bookingLateractions';
 import { 
     fetchCancelReasons,
     editCancellationReason
@@ -181,7 +187,17 @@ const FirebaseProvider  = ({ config, appcat, children }) => {
             trackingRef: (bookingId) => app.database().ref('tracking/' + bookingId),
             tasksRef:() => app.database().ref('bookings').orderByChild('status').equalTo('NEW'),
             singleTaskRef:(uid,bookingId) => app.database().ref("bookings/" + bookingId  + "/requestedDrivers/" + uid),
-            bookingListRef:(uid,role) => 
+            bookingLaterRef:(uid,role) =>
+                role == 'rider'? app.database().ref('bookings').orderByChild('customer').equalTo(uid).limitToLast(6):
+                    (role == 'driver'?
+                            app.database().ref('bookings').orderByChild('driver').equalTo(uid).limitToLast(6)
+                            :
+                            (role == 'fleetadmin'?
+                                    app.database().ref('bookings').orderByChild('fleetadmin').equalTo(uid).limitToLast(6)
+                                    : app.database().ref('bookings').limitToLast(6)
+                            )
+                    ),
+            bookingListRef:(uid,role) =>
                 role == 'rider'? app.database().ref('bookings').orderByChild('customer').equalTo(uid):
                     (role == 'driver'? 
                         app.database().ref('bookings').orderByChild('driver').equalTo(uid)
@@ -191,6 +207,7 @@ const FirebaseProvider  = ({ config, appcat, children }) => {
                             : app.database().ref('bookings')
                         )
                     ),
+
             chatRef:(bookingId) => app.database().ref('chats/' + bookingId + '/messages'),
             withdrawRef:app.database().ref('withdraws/'),
             languagesRef:app.database().ref("languages"),
@@ -232,8 +249,9 @@ const FirebaseProvider  = ({ config, appcat, children }) => {
                 clearLoginError: () => (dispatch) => clearLoginError()(dispatch)(firebase), 
                 addBooking: (bookingData) => (dispatch) => addBooking(bookingData)(dispatch)(firebase), 
                 clearBooking: () => (dispatch) => clearBooking()(dispatch)(firebase), 
-                fetchBookings: (uid, role) => (dispatch) => fetchBookings(uid, role)(dispatch)(firebase), 
-                updateBooking: (booking) => (dispatch) => updateBooking(booking)(dispatch)(firebase), 
+                fetchBookingsLater: (uid, role) => (dispatch) => fetchBookingsLater(uid, role)(dispatch)(firebase),
+                fetchBookings: (uid, role) => (dispatch) => fetchBookings(uid, role)(dispatch)(firebase),
+                updateBooking: (booking) => (dispatch) => updateBooking(booking)(dispatch)(firebase),
                 cancelBooking: (data) => (dispatch) => cancelBooking(data)(dispatch)(firebase), 
                 fetchCancelReasons: () => (dispatch) => fetchCancelReasons()(dispatch)(firebase), 
                 editCancellationReason: (reasons, method) => (dispatch) => editCancellationReason(reasons, method)(dispatch)(firebase), 

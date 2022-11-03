@@ -13,8 +13,11 @@ import { useSelector } from 'react-redux';
 import { DrawerActions } from '@react-navigation/native';
 
 
+
 export default function BookingLater(props) {
-    const bookings = useSelector(state => state.bookinglistdata.bookings);
+  //  const bookings = useSelector(state => state.bookinglistdata.bookings);
+    const bookings = useSelector(state => state.bookingLater.bookings);
+  //  console.log(bookings.length)
     const settings = useSelector(state => state.settingsdata.settings);
     const fromBooking  = props.route.params?props.route.params: null;
     const [bookingData,setBookingData] = useState([]);
@@ -23,6 +26,8 @@ export default function BookingLater(props) {
     const [tabIndex, setTabIndex] = useState(-1);
 
     useEffect(()=>{
+
+        //console.log(bookings)
         if(bookings){
             setBookingData(bookings);
             if(fromBooking){
@@ -51,7 +56,7 @@ export default function BookingLater(props) {
     }
 
     const hCom ={ icon: 'grid-outline', type: 'ionicon', color: colors.BLACK, size: 30, component: TouchableWithoutFeedback, onPress: () => { props.navigation.dispatch(DrawerActions.toggleDrawer()); } };
-    
+
     return (
         <View style={styles.mainView}>
             <Header
@@ -64,8 +69,21 @@ export default function BookingLater(props) {
             />
             {tabIndex>=0?
                 <Bklist onPressButton={(item, index) => { goDetails(item, index) }} data={bookingData} tabIndex={tabIndex}></Bklist>
-            :null}
+                :null}
         </View>
+        // <View style={styles.mainView}>
+        //     <Header
+        //         backgroundColor={colors.HEADER}
+        //         leftComponent={isRTL? null:hCom}
+        //         centerComponent={<Text style={styles.headerTitleStyle}>{t('booking_later')}</Text>}
+        //         rightComponent={isRTL? hCom:null}
+        //         containerStyle={styles.headerStyle}
+        //         innerContainerStyles={{ marginLeft: 10, marginRight: 10 }}
+        //     />
+        //     {tabIndex>=0?
+        //         <Bklist onPressButton={(item, index) => { goDetails(item, index) }} data={bookingData} tabIndex={tabIndex}></Bklist>
+        //     :null}
+        // </View>
     );
 
 }

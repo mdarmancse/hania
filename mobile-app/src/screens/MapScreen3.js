@@ -480,8 +480,10 @@ export default function MapScreen(props) {
                     Alert.alert(t('alert'), t('car_type_blank_error'))
                 } else {
                     let driver_available = false;
+
                     for (let i = 0; i < allCarTypes.length; i++) {
                         let car = allCarTypes[i];
+
                         if (car.name == tripdata.carType.name && car.minTime) {
                             driver_available = true;
                             break;
