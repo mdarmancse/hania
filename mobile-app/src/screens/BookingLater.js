@@ -68,7 +68,7 @@ export default function BookingLater(props) {
                 innerContainerStyles={{ marginLeft: 10, marginRight: 10 }}
             />
             {tabIndex>=0?
-                <Bklist onPressButton={(item, index) => { goDetails(item, index) }} data={bookingData} tabIndex={tabIndex}></Bklist>
+                <Bklist onPressButton={(item, index) => { goDetails(item, index) }} data={bookingData}  tabIndex={tabIndex}></Bklist>
                 :null}
         </View>
         // <View style={styles.mainView}>

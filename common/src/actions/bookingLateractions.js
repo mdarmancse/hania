@@ -49,10 +49,10 @@ export const fetchBookingsLater = (uid, role) => (dispatch) => (firebase) => {
 
 
       for (let i = 0; i < bookings.length; i++) {
-        if (['PENDING'].indexOf(bookings[i].status) != -1) {
+        if (['PAYMENT_PENDING','NEW', 'ACCEPTED', 'ARRIVED', 'STARTED', 'REACHED', 'PENDING', 'PAID'].indexOf(bookings[i].status) != -1) {
           active.push(bookings[i]);
         }
-        if ((['PENDING'].indexOf(bookings[i].status) != -1) && role == 'driver') {
+        if ((['ACCEPTED', 'ARRIVED', 'STARTED'].indexOf(bookings[i].status) != -1) && role == 'driver') {
           tracked = bookings[i];
           fetchBookingLocations(tracked.id)(dispatch)(firebase);
         }

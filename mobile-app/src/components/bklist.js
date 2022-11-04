@@ -1,14 +1,19 @@
 import React, {useState, useContext} from 'react';
 import {View, Text, FlatList, StyleSheet, TouchableOpacity, Image, ScrollView} from 'react-native';
-import { Icon } from 'react-native-elements'
+import {Button, Icon} from 'react-native-elements'
 import { colors } from '../common/theme';
 import i18n from 'i18n-js';
 import { useSelector } from 'react-redux';
 import SegmentedControlTab from 'react-native-segmented-control-tab';
 import moment from 'moment/min/moment-with-locales';
 import { FirebaseContext } from 'common/src';
+import { useNavigation } from '@react-navigation/native';
 
 export default function Bklist(props) {
+    const navigation = useNavigation();
+   // console.log(props)
+   //  const {data}  = props.route.params;
+    //  const paramData = data;
     const { t } = i18n;
     const isRTL = i18n.locale.indexOf('he') === 0 || i18n.locale.indexOf('ar') === 0;
     const { appcat } = useContext(FirebaseContext);
@@ -19,10 +24,17 @@ export default function Bklist(props) {
     const onPressButton = (item, index) => {
         props.onPressButton(item, index)
     }
+
+
+    const goToBooking = (id) => {
+       // props.navigation.goBack();
+         navigation.navigate('BookedCab',{bookingId:id});
+    };
+
     
     const renderData = ({ item, index }) => {
 
-        if (item.bookLater == true && item.status == 'NEW' ) {
+        if (item.bookLater == true && item.status == 'ACCEPTED' ) {
 
 
             // console.log(item)
@@ -61,6 +73,17 @@ export default function Bklist(props) {
                                     style={[styles.textStyle, styles.carNoStyle, {textAlign: isRTL ? "right" : "left"}]}>{item.vehicle_number ? item.vehicle_number : t('no_car_assign_text')}</Text>
                             </View>
                             <View
+                                style={[styles.dropStyle, styles.textViewStyle, {flexDirection: isRTL ? 'row-reverse' : 'row'}]}>
+                                <View style={[styles.blackDot, styles.textPosition]}/>
+                                <Text style={[styles.dropPlaceStyle, styles.placeStyle, isRTL ? {
+                                    textAlign: "right",
+                                    marginRight: 10
+                                } : {
+                                    textAlign: "left",
+                                    marginLeft: 10
+                                }]}>{item.trip_cost ? 'Price: '+ item.trip_cost :t('not_found_text')}</Text>
+                            </View>
+                            <View
                                 style={[styles.picupStyle, styles.position, {flexDirection: isRTL ? 'row-reverse' : 'row'}]}>
 
                                 <View style={styles.greenDot}/>
@@ -86,9 +109,21 @@ export default function Bklist(props) {
 
                         </View>
                         <View style={styles.textView2}>
-                            <TouchableOpacity onPress={() => SendMsg()}>
-                                <Text style={styles.accept}>Accept</Text>
+                            <TouchableOpacity
+                                // onPress={() => props.navigation.navigate('DrawerOpen')}>
+                                 onPress={() => goToBooking(item.id)}>
+                                <Text style={styles.accept}>{t('go_to_booking')}</Text>
                             </TouchableOpacity>
+
+                            {/*<Button*/}
+                            {/*    title={t('go_to_booking')}*/}
+                            {/*    loading={false}*/}
+                            {/*    loadingProps={{ size: "large", color: colors.GREEN_DOT }}*/}
+                            {/*    titleStyle={styles.buttonTitleText2}*/}
+                            {/*    onPress={() => { goToBooking(item.id) }}*/}
+                            {/*    buttonStyle={styles.buttons}*/}
+                            {/*    containerStyle={styles.paynowButton}*/}
+                            {/*/>*/}
                         </View>
                     </View>
                 </TouchableOpacity>
@@ -170,6 +205,13 @@ const styles = StyleSheet.create({
         width: 10,
         height: 10,
         backgroundColor: colors.RED
+
+    },
+    blackDot: {
+        borderRadius: 10,
+        width: 10,
+        height: 10,
+        backgroundColor: colors.BLACK
 
     },
     logoStyle: {
