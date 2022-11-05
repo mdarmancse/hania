@@ -282,12 +282,12 @@ const styles = StyleSheet.create({
     accept: {
         fontFamily: 'Roboto-Regular',
         alignSelf: 'center',
-        color: 'black',
+        color: 'white',
         fontSize: 16,
         fontWeight: 'bold',
         padding: 7,
         textTransform:'uppercase',
-        backgroundColor: colors.BACKGROUND_PRIMARY,
+        backgroundColor: colors.NEW,
         borderRadius:5
     },
 });

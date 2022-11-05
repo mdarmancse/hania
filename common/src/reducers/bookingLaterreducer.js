@@ -9,6 +9,7 @@ import {
 const INITIAL_STATE = {
   bookings: null,
   active: null,
+  Count: null,
   tracked: null,
   loading: false,
   error: {
@@ -37,6 +38,7 @@ export const bookingLaterreducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         bookings: null,
+        Count: null,
         active:null,
         tracked:null,
         loading: false,

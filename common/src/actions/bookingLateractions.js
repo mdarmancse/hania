@@ -30,21 +30,31 @@ export const fetchBookingsLater = (uid, role) => (dispatch) => (firebase) => {
 
       const active = [];
       let tracked = null;
+      let Count = 0;
       const bookings = Object.keys(data)
         .map((i) => {
-          data[i].id = i;
-          data[i].pickupAddress = data[i].pickup.add;
-          data[i].dropAddress = data[i].drop.add;
-          data[i].discount = data[i].discount_amount
-            ? data[i].discount_amount
-            : 0;
-          data[i].cashPaymentAmount = data[i].cashPaymentAmount
-            ? data[i].cashPaymentAmount
-            : 0;
-          data[i].cardPaymentAmount = data[i].cardPaymentAmount
-            ? data[i].cardPaymentAmount
-            : 0;
+
+           if (data[i].bookLater  == true && data[i].status  == 'ACCEPTED') {
+
+
+             data[i].count = Count;
+             data[i].id = i;
+             data[i].pickupAddress = data[i].pickup.add;
+             data[i].dropAddress = data[i].drop.add;
+             data[i].discount = data[i].discount_amount
+                 ? data[i].discount_amount
+                 : 0;
+             data[i].cashPaymentAmount = data[i].cashPaymentAmount
+                 ? data[i].cashPaymentAmount
+                 : 0;
+             data[i].cardPaymentAmount = data[i].cardPaymentAmount
+                 ? data[i].cardPaymentAmount
+                 : 0;
+
+             Count++;
+           }
           return data[i];
+          // }
         });
 
 
@@ -62,7 +72,9 @@ export const fetchBookingsLater = (uid, role) => (dispatch) => (firebase) => {
         payload: {
           bookings: bookings.reverse(),
           active: active,
-          tracked: tracked
+          tracked: tracked,
+          Count: Count,
+
         },
       });
       if (tracked) {

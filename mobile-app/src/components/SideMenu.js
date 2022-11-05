@@ -27,6 +27,9 @@ export default function SideMenu(props){
     const dispatch = useDispatch();
     const auth = useSelector(state => state.auth);
     const settings = useSelector(state => state.settingsdata.settings);
+    const bookings = useSelector(state => state.bookingLater.Count);
+
+    // console.log(bookings.length)
     const { t } = i18n;
     const isRTL = i18n.locale.indexOf('he') === 0 || i18n.locale.indexOf('ar') === 0;
 
@@ -154,7 +157,7 @@ export default function SideMenu(props){
                                             containerStyle={styles.iconStyle}
                                         />
                                     </View>
-                                    <Text style={styles.menuName}>{item.name}</Text><Badge value="5" status="error"/>
+                                    <Text style={styles.menuName}>{item.name}</Text><Badge value={bookings} status="error"/>
                                     <View style={[styles.vertialLine, {height: 20, top: 24}]}></View>
                                 </TouchableOpacity>
                             )

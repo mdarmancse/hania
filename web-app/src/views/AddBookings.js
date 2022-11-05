@@ -334,8 +334,22 @@ export default function AddBookings(props) {
           break;
         }
       }
+}
+    if(bookingType === 'Book Later') {
+      for (let i = 0; i < drivers.length; i++) {
+        const driver = drivers[i];
+        let distance = GetDistance(pickupAddress.coords.lat, pickupAddress.coords.lng, driver.location.lat, driver.location.lng);
+        if (settings.convert_to_mile) {
+          distance = distance / 1.609344;
+        }
+        if (distance < ((settings && settings.driverRadius) ? settings.driverRadius : 30)) {
+          found = true;
+          break;
+        }
+      }
     }
-    if((found && bookingType ==='Book Now') || bookingType === 'Book Later'){
+
+      if((found && bookingType ==='Book Now') || bookingType === 'Book Later'){
       if (appcat==='delivery') {
         const regx1 = /([0-9\s-]{7,})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$/;
         if (/\S/.test(instructionData.deliveryPerson) && regx1.test(instructionData.deliveryPersonPhone) && instructionData.deliveryPersonPhone && instructionData.deliveryPersonPhone.length > 6) {
