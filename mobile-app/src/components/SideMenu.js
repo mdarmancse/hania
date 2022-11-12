@@ -136,7 +136,7 @@ export default function SideMenu(props){
                         } else if ((auth.info.profile.usertype == 'admin' || auth.info.profile.usertype == 'fleetadmin') && item.navigationName == 'Notifications') {
                             return null;
                         }
-                        else if (auth.info.profile.usertype == 'driver' && item.navigationName == 'BookingLater') {
+                        else if ((auth.info.profile.usertype == 'admin' || auth.info.profile.usertype == 'fleetadmin'|| auth.info.profile.usertype == 'admin') && (item.navigationName == 'BookingLater')) {
                             return (
                                 <TouchableOpacity
                                     onPress={
