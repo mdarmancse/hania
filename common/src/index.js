@@ -188,12 +188,12 @@ const FirebaseProvider  = ({ config, appcat, children }) => {
             tasksRef:() => app.database().ref('bookings').orderByChild('status').equalTo('NEW'),
             singleTaskRef:(uid,bookingId) => app.database().ref("bookings/" + bookingId  + "/requestedDrivers/" + uid),
             bookingLaterRef:(uid,role) =>
-                role == 'rider'? app.database().ref('bookings').orderByChild('customer').equalTo(uid).limitToFirst(6):
+                role == 'rider'? app.database().ref('bookings').orderByChild('status').equalTo('NEW').limitToFirst(6):
                     (role == 'driver'?
-                            app.database().ref('bookings').orderByChild('driver').equalTo(uid).limitToFirst(6)
+                            app.database().ref('bookings').orderByChild('status').equalTo('NEW').limitToFirst(6)
                             :
                             (role == 'fleetadmin'?
-                                    app.database().ref('bookings').orderByChild('fleetadmin').equalTo(uid).limitToFirst(6)
+                                    app.database().ref('bookings').orderByChild('status').equalTo('NEW').limitToFirst(6)
                                     : app.database().ref('bookings').limitToFirst(6)
                             )
                     ),

@@ -17,7 +17,7 @@ import { DrawerActions } from '@react-navigation/native';
 export default function BookingLater(props) {
   //  const bookings = useSelector(state => state.bookinglistdata.bookings);
     const bookings = useSelector(state => state.bookingLater.bookings);
-  //  console.log(bookings.length)
+
     const settings = useSelector(state => state.settingsdata.settings);
     const fromBooking  = props.route.params?props.route.params: null;
     const [bookingData,setBookingData] = useState([]);
@@ -53,10 +53,13 @@ export default function BookingLater(props) {
             item.roundoff = (Math.round(item.roundoffCost) - item.estimate).toFixed(settings.decimal);
             props.navigation.push('RideDetails', { data: item });
         }
-    }
+    };
 
     const hCom ={ icon: 'grid-outline', type: 'ionicon', color: colors.BLACK, size: 30, component: TouchableWithoutFeedback, onPress: () => { props.navigation.dispatch(DrawerActions.toggleDrawer()); } };
 
+
+    console.log('bookingData');
+    console.log(bookingData);
     return (
         <View style={styles.mainView}>
             <Header

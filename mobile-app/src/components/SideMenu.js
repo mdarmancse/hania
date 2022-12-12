@@ -29,7 +29,7 @@ export default function SideMenu(props){
     const settings = useSelector(state => state.settingsdata.settings);
     const bookings = useSelector(state => state.bookingLater.Count);
 
-    // console.log(bookings.length)
+     //console.log(bookings)
     const { t } = i18n;
     const isRTL = i18n.locale.indexOf('he') === 0 || i18n.locale.indexOf('ar') === 0;
 
@@ -136,7 +136,7 @@ export default function SideMenu(props){
                         } else if ((auth.info.profile.usertype == 'admin' || auth.info.profile.usertype == 'fleetadmin') && item.navigationName == 'Notifications') {
                             return null;
                         }
-                        else if ((auth.info.profile.usertype == 'admin' || auth.info.profile.usertype == 'fleetadmin'|| auth.info.profile.usertype == 'admin') && (item.navigationName == 'BookingLater')) {
+                        else if ((auth.info.profile.usertype == 'admin' || auth.info.profile.usertype == 'fleetadmin'|| auth.info.profile.usertype == 'admin'||  auth.info.profile.usertype == 'driver') && (item.navigationName == 'BookingLater')) {
                             return (
                                 <TouchableOpacity
                                     onPress={

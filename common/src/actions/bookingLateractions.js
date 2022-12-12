@@ -31,11 +31,11 @@ export const fetchBookingsLater = (uid, role) => (dispatch) => (firebase) => {
       const active = [];
       let tracked = null;
       let Count = 0;
+
       const bookings = Object.keys(data)
         .map((i) => {
 
-           if (data[i].bookLater  == true && data[i].status  == 'ACCEPTED') {
-
+           if (data[i].bookLater  == true && data[i].status  == 'NEW' ) {
 
              data[i].count = Count;
              data[i].id = i;
@@ -53,20 +53,22 @@ export const fetchBookingsLater = (uid, role) => (dispatch) => (firebase) => {
 
              Count++;
            }
+          // console.log('ITEMSSS');
+          // console.log(data);
           return data[i];
           // }
         });
 
-
-      for (let i = 0; i < bookings.length; i++) {
-        if (['PAYMENT_PENDING','NEW', 'ACCEPTED', 'ARRIVED', 'STARTED', 'REACHED', 'PENDING', 'PAID'].indexOf(bookings[i].status) != -1) {
-          active.push(bookings[i]);
-        }
-        if ((['ACCEPTED', 'ARRIVED', 'STARTED'].indexOf(bookings[i].status) != -1) && role == 'driver') {
-          tracked = bookings[i];
-          fetchBookingLocations(tracked.id)(dispatch)(firebase);
-        }
-      }
+      //
+      // for (let i = 0; i < bookings.length; i++) {
+      //   if (['PAYMENT_PENDING','NEW', 'ACCEPTED', 'ARRIVED', 'STARTED', 'REACHED', 'PENDING', 'PAID'].indexOf(bookings[i].status) != -1) {
+      //     active.push(bookings[i]);
+      //   }
+      //   if ((['NEW'].indexOf(bookings[i].status) != -1) && role == 'driver') {
+      //     tracked = bookings[i];
+      //     fetchBookingLocations(tracked.id)(dispatch)(firebase);
+      //   }
+      // }
       dispatch({
         type: FETCH_BOOKINGS_SUCCESS,
         payload: {
