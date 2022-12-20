@@ -6,6 +6,7 @@ import {
   CANCEL_TASK,
 } from "../store/types";
 import store from "../store/store";
+
 import { updateProfile } from "./authactions";
 import { RequestPushMsg } from "../other/NotificationFunctions";
 
@@ -42,18 +43,23 @@ export const fetchTasks = () => (dispatch) => (firebase) => {
 };
 
 export const acceptTask = (userAuthData, task) => (dispatch) => (firebase) => {
+
+
   const { trackingRef, singleUserRef, singleBookingRef } = firebase;
 
   let uid = userAuthData.uid;
+
+
 
   singleUserRef(uid).once("value", (snapshot) => {
     let profile = snapshot.val();
 
     userAuthData.profile = profile;
 
+
     singleBookingRef(task.id)
       .transaction((booking) => {
-        if (booking && booking.requestedDrivers) {
+        if (booking) {
           booking.driver = uid;
           booking.driver_image = profile.profile_image
             ? profile.profile_image
@@ -71,6 +77,7 @@ export const acceptTask = (userAuthData, task) => (dispatch) => (firebase) => {
           booking.fleetadmin = profile.fleetadmin ? profile.fleetadmin : "";
           booking.status = "ACCEPTED";
           booking.requestedDrivers = null;
+
           return booking;
         }
       })
@@ -81,11 +88,13 @@ export const acceptTask = (userAuthData, task) => (dispatch) => (firebase) => {
             if (!snapshot.exists()) {
               return;
             } else {
+
               let requestedDrivers =
                 snapshot.val() && snapshot.val().requestedDrivers;
               let driverId = snapshot.val() && snapshot.val().driver;
 
-              if (requestedDrivers == undefined && driverId === uid) {
+
+              if (requestedDrivers == undefined && uid === driverId) {
                 updateProfile(userAuthData, { queue: true })(dispatch)(
                   firebase
                 );
@@ -113,6 +122,7 @@ export const acceptTask = (userAuthData, task) => (dispatch) => (firebase) => {
                   type: ACCEPT_TASK,
                   payload: { task: task },
                 });
+
               }
             }
           })

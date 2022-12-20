@@ -3,6 +3,7 @@ import {
   FETCH_BOOKINGS_SUCCESS,
   FETCH_BOOKINGS_FAILED,
   UPDATE_BOOKING,
+    ACCEPT_BOOKING,
   CANCEL_BOOKING
 } from "../store/types";
 
@@ -45,10 +46,20 @@ export const bookingslistreducer = (state = INITIAL_STATE, action) => {
     case UPDATE_BOOKING:
       return {
         ...state
-      }      
+      }
+
+    case ACCEPT_BOOKING:
+      return {
+        ...state,
+        active: [
+            state
+        ]
+      }
+
     case CANCEL_BOOKING:
       return {
-        ...state
+        ...state,
+
       };
     default:
       return state;

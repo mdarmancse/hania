@@ -1,5 +1,17 @@
 import React, {useState, useContext} from 'react';
-import {View, Text, FlatList, StyleSheet, TouchableOpacity, Image, ScrollView, Alert} from 'react-native';
+import {
+    View,
+    Text,
+    FlatList,
+    StyleSheet,
+    TouchableOpacity,
+    Image,
+    ScrollView,
+    Alert,
+    Modal,
+    TouchableHighlight,
+    AsyncStorage
+} from 'react-native';
 import {Button, Icon} from 'react-native-elements'
 import { colors } from '../common/theme';
 import i18n from 'i18n-js';
@@ -8,6 +20,7 @@ import SegmentedControlTab from 'react-native-segmented-control-tab';
 import moment from 'moment/min/moment-with-locales';
 import { FirebaseContext } from 'common/src';
 import { useNavigation } from '@react-navigation/native';
+import {updateBooking} from "../../../common/src/actions/bookinglistactions";
 
 export default function Bklist(props) {
     const navigation = useNavigation();
@@ -33,6 +46,9 @@ export default function Bklist(props) {
     };
 
     const onPressAccept = (item) => {
+
+        // console.log("auth", auth.info);
+
         let wallet_balance = parseFloat(auth.info.profile.walletBalance);
         if (!settings.negativeBalance && wallet_balance <= 0) {
             if(appcat == 'delivery' && item.prepaid && item.payment_mode == 'card'){
@@ -40,7 +56,9 @@ export default function Bklist(props) {
                 setSelectedItem(null);
                 setModalVisible(null);
                 setTimeout(() => {
-                    props.navigation.navigate('BookedCab', { bookingId: item.id });
+                   // props.navigation.navigate('BookedCab', { bookingId: item.id });
+                    navigation.navigate('BookedCab',{ bookingId: item.id });
+
                 }, 3000)
             } else{
                 Alert.alert(
@@ -55,8 +73,8 @@ export default function Bklist(props) {
                 setSelectedItem(null);
                 setModalVisible(null);
                 setTimeout(() => {
-                    navigation.navigate('BookedCab',{bookingId: item.id });
-
+                    navigation.navigate('BookedCab',{ bookingId: item.id });
+                   // props.navigation.navigate('BookedCab', { bookingId: item.id });
                 }, 3000)
             } else{
                 Alert.alert(
@@ -66,11 +84,25 @@ export default function Bklist(props) {
             }
         } else {
             dispatch(acceptTask(auth.info, item));
+let new_item = {...item, status: "ACCEPTED"};
+            dispatch(updateBooking(new_item));
+
+            const storeData = async () => {
+                try {
+                    const jsonValue = JSON.stringify([new_item]);
+                    await AsyncStorage.setItem('@active', jsonValue)
+                } catch (e) {
+                   console.log(e)
+                }
+            }
+
+            storeData();
+
             setSelectedItem(null);
             setModalVisible(null);
             setTimeout(() => {
-                navigation.navigate('BookedCab',{bookingId: item.id });
-                // props.navigation.navigate('BookedCab', { bookingId: item.id });
+                navigation.navigate('BookedCab',{ bookingId: item.id });
+               // props.navigation.navigate('BookedCab', { bookingId: item.id });
             }, 3000)
         }
     };
@@ -128,7 +160,7 @@ export default function Bklist(props) {
                                 } : {
                                     textAlign: "left",
                                     marginLeft: 10
-                                }]}>{item.trip_cost ? 'Price: '+ item.status :t('not_found_text')}</Text>
+                                }]}>{item.trip_cost ? 'Price: '+ item.price :t('not_found_text')}</Text>
                             </View>
                             <View
                                 style={[styles.picupStyle, styles.position, {flexDirection: isRTL ? 'row-reverse' : 'row'}]}>
@@ -173,12 +205,49 @@ export default function Bklist(props) {
                             {/*/>*/}
                         </View>
                     </View>
+                    <View style={styles.modalPage}>
+                        <Modal
+                            animationType="slide"
+                            transparent={true}
+                            visible={modalVisible}
+                            onRequestClose={() => {
+                                Alert.alert(t('modal_close'));
+                            }}>
+                            <View style={styles.modalMain}>
+                                <View style={styles.modalContainer}>
+                                    <View style={styles.modalHeading}>
+                                        <Text style={styles.alertStyle}>{t('alert_text')}</Text>
+                                    </View>
+                                    <View style={styles.modalBody}>
+                                        <Text style={{ fontSize: 16 }}>{t('ignore_job_title')}</Text>
+                                    </View>
+                                    <View style={[styles.modalFooter,{flexDirection: isRTL? 'row-reverse' : 'row'}]}>
+                                        <TouchableHighlight
+                                            style={isRTL? [styles.btnStyle] : [styles.btnStyle, styles.clickText]}
+                                            onPress={() => {
+                                                setModalVisible(!modalVisible);
+                                                setSelectedItem(null);
+                                            }}>
+                                            <Text style={styles.cancelTextStyle}>{t('cancel')}</Text>
+                                        </TouchableHighlight>
+                                        <TouchableHighlight
+                                            style={isRTL? [styles.btnStyle, styles.clickText] : [styles.btnStyle]}
+                                            onPress={() => {
+                                                onPressIgnore(selectedItem.id)
+                                            }}>
+                                            <Text style={styles.okStyle}>{t('ok')}</Text>
+                                        </TouchableHighlight>
+                                    </View>
+                                </View>
+                            </View>
+                        </Modal>
+                    </View>
                 </TouchableOpacity>
 
             )
 
         }
-    }
+    };
 
        
     return (

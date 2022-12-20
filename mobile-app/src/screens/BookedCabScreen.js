@@ -11,7 +11,7 @@ import {
     TouchableWithoutFeedback,
     Linking,
     Alert,
-    Share
+    Share, AsyncStorage
 } from 'react-native';
 import { TouchableOpacity as OldTouch } from 'react-native';
 import { Icon, Button, Header } from 'react-native-elements';
@@ -47,7 +47,7 @@ export default function BookedCabScreen(props) {
     const [alertModalVisible, setAlertModalVisible] = useState(false);
     const [modalVisible, setModalVisible] = useState(false);
     const [searchModalVisible, setSearchModalVisible] = useState(false);
-    const activeBookings = useSelector(state => state.bookinglistdata.active);
+    let activeBookings = useSelector(state => state.bookinglistdata.active);
     const [curBooking, setCurBooking] = useState(null);
     const cancelReasons = useSelector(state => state.cancelreasondata.complex);
     const auth = useSelector(state => state.auth);
@@ -158,65 +158,85 @@ export default function BookedCabScreen(props) {
     }
 
 
+    const getData = async () => {
+        try {
+            const jsonValue = await AsyncStorage.getItem('@active');
+            return  jsonValue != null ? JSON.parse(jsonValue) : null;
+        } catch(e) {
+            console.log(e)
+        }
+    }
+
+
     useEffect(() => {
-        if (activeBookings && activeBookings.length >= 1) {
-            let booking = activeBookings.filter(booking => booking.id == bookingId)[0];
-            if (booking) {
-                setCurBooking(booking);
-                if (booking.status == 'NEW' && booking.bookLater == false) {
-                    if (role == 'rider') setSearchModalVisible(true);
-                }
-                if (booking.status == 'ACCEPTED') {
-                    if (role == 'rider') setSearchModalVisible(false);
-                    if (role == 'rider') dispatch(fetchBookingLocations(bookingId));
-                }
-                if (booking.status == 'ARRIVED') {
-                    if (role == 'rider') dispatch(fetchBookingLocations(bookingId));
-                }
-                if (booking.status == 'STARTED') {
-                    if (role == 'rider') dispatch(fetchBookingLocations(bookingId));
-                }
-                if (booking.status == 'REACHED') {
-                    if (role == 'driver') {
-                        if (booking.prepaid) {
-                            booking.status = 'PAID';
-                            dispatch(updateBooking(booking));
-                        } else {
-                            props.navigation.navigate('PaymentDetails', { booking: booking });
-                        }
-                    } else {
-                        dispatch(stopLocationFetch(bookingId));
-                    }
-                }
-                if (booking.status == 'PENDING') {
-                    if (role == 'rider') props.navigation.navigate('PaymentDetails', { booking: booking });
-                }
-                if (booking.status == 'PAID' & pageActive.current) {
-                    if (role == 'rider') props.navigation.navigate('DriverRating', { bookingId: booking.id });
-                    if (role == 'driver') props.navigation.navigate('DriverTrips');
-                }
-                if ((booking.status == 'ACCEPTED' || booking.status == 'ARRIVED') && booking.pickup_image) {
-                    setLoading(false);
-                }
-                if (booking.status == 'STARTED' && booking.deliver_image) {
-                    setLoading(false);
-                }
-            }
-            else {
-                setModalVisible(false);
-                setSearchModalVisible(false);
-                props.navigation.navigate('RideList',{fromBooking:true});
-            }
-        }
-        else {
-            setModalVisible(false);
-            setSearchModalVisible(false);
-            if (role == 'driver') {
-                props.navigation.navigate('DriverTrips');
-            } else {
-                props.navigation.navigate('RideList',{fromBooking:true});
-            }
-        }
+
+
+      getData().then((r) => {
+          activeBookings = r;
+          console.log('activeBookings');
+          console.log(activeBookings);
+
+          if (activeBookings && activeBookings.length >= 1) {
+              let booking = activeBookings.filter(booking => booking.id == bookingId)[0];
+
+              if (booking) {
+                  setCurBooking(booking);
+                  if (booking.status == 'NEW' && booking.bookLater == false) {
+                      if (role == 'rider') setSearchModalVisible(true);
+                  }
+                  if (booking.status == 'ACCEPTED') {
+                      if (role == 'rider') setSearchModalVisible(false);
+                      if (role == 'rider') dispatch(fetchBookingLocations(bookingId));
+                  }
+                  if (booking.status == 'ARRIVED') {
+                      if (role == 'rider') dispatch(fetchBookingLocations(bookingId));
+                  }
+                  if (booking.status == 'STARTED') {
+                      if (role == 'rider') dispatch(fetchBookingLocations(bookingId));
+                  }
+                  if (booking.status == 'REACHED') {
+                      if (role == 'driver') {
+                          if (booking.prepaid) {
+                              booking.status = 'PAID';
+                              dispatch(updateBooking(booking));
+                          } else {
+                              props.navigation.navigate('PaymentDetails', { booking: booking });
+                          }
+                      } else {
+                          dispatch(stopLocationFetch(bookingId));
+                      }
+                  }
+                  if (booking.status == 'PENDING') {
+                      if (role == 'rider') props.navigation.navigate('PaymentDetails', { booking: booking });
+                  }
+                  if (booking.status == 'PAID' & pageActive.current) {
+                      if (role == 'rider') props.navigation.navigate('DriverRating', { bookingId: booking.id });
+                      if (role == 'driver') props.navigation.navigate('DriverTrips');
+                  }
+                  if ((booking.status == 'ACCEPTED' || booking.status == 'ARRIVED') && booking.pickup_image) {
+                      setLoading(false);
+                  }
+                  if (booking.status == 'STARTED' && booking.deliver_image) {
+                      setLoading(false);
+                  }
+              }
+              else {
+                  setModalVisible(false);
+                  setSearchModalVisible(false);
+                  props.navigation.navigate('RideList',{fromBooking:true});
+              }
+          }
+          else {
+              setModalVisible(false);
+              setSearchModalVisible(false);
+              if (role == 'driver') {
+                  props.navigation.navigate('DriverTrips');
+              } else {
+                  props.navigation.navigate('RideList',{fromBooking:true});
+              }
+          }
+      });
+
     }, [activeBookings, role, pageActive.current]);
 
     const renderButtons = () => {

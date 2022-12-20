@@ -3,6 +3,7 @@ import {
   FETCH_BOOKINGS_SUCCESS,
   FETCH_BOOKINGS_FAILED,
   UPDATE_BOOKING,
+    ACCEPT_BOOKING,
   CANCEL_BOOKING
 } from "../store/types";
 import { fetchBookingLocations } from '../actions/locationactions';
@@ -88,10 +89,17 @@ export const updateBooking = (booking) => (dispatch) => async (firebase) => {
     settingsRef
   } = firebase;
 
-  dispatch({
-    type: UPDATE_BOOKING,
-    payload: booking,
-  });
+  if(booking.status == 'ACCEPTED'){
+    dispatch({
+      type: ACCEPT_BOOKING,
+      payload: booking
+    });
+  }else {
+    dispatch({
+      type: UPDATE_BOOKING,
+      payload: booking,
+    });
+  }
   
   if (booking.status == 'PAYMENT_PENDING') {
     singleBookingRef(booking.id).update(booking);
@@ -99,6 +107,11 @@ export const updateBooking = (booking) => (dispatch) => async (firebase) => {
   if (booking.status == 'NEW') {
     singleBookingRef(booking.id).update(booking);
   }
+
+  // if (booking.status == 'ACCEPTED') {
+  //   singleBookingRef(booking.id).update(booking);
+  // }
+  
   if (booking.status == 'ARRIVED') {
     let dt = new Date();
     booking.driver_arrive_time = dt.getTime().toString();

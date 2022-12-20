@@ -58,8 +58,7 @@ export default function BookingLater(props) {
     const hCom ={ icon: 'grid-outline', type: 'ionicon', color: colors.BLACK, size: 30, component: TouchableWithoutFeedback, onPress: () => { props.navigation.dispatch(DrawerActions.toggleDrawer()); } };
 
 
-    console.log('bookingData');
-    console.log(bookingData);
+
     return (
         <View style={styles.mainView}>
             <Header
