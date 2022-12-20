@@ -173,8 +173,6 @@ export default function BookedCabScreen(props) {
 
       getData().then((r) => {
           activeBookings = r;
-          console.log('activeBookings');
-          console.log(activeBookings);
 
           if (activeBookings && activeBookings.length >= 1) {
               let booking = activeBookings.filter(booking => booking.id == bookingId)[0];
