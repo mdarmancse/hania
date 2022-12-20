@@ -1,7 +1,7 @@
 import {
   FETCH_BOOKINGS_LATER,
-  FETCH_BOOKINGS_SUCCESS,
-  FETCH_BOOKINGS_FAILED,
+  FETCH_BOOKINGS_LATER_SUCCESS,
+  FETCH_BOOKINGS_LATER_FAILED,
   UPDATE_BOOKING,
   CANCEL_BOOKING
 } from "../store/types";
@@ -28,13 +28,13 @@ export const bookingLaterreducer = (state = INITIAL_STATE, action) => {
         ...state,
         loading: true
       };
-    case FETCH_BOOKINGS_SUCCESS:
+    case FETCH_BOOKINGS_LATER_SUCCESS:
       return {
         ...state,
         ...action.payload,
         loading: false
       };
-    case FETCH_BOOKINGS_FAILED:
+    case FETCH_BOOKINGS_LATER_FAILED:
       return {
         ...state,
         bookings: null,

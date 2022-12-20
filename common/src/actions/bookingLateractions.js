@@ -1,7 +1,7 @@
 import {
   FETCH_BOOKINGS_LATER,
-  FETCH_BOOKINGS_SUCCESS,
-  FETCH_BOOKINGS_FAILED,
+  FETCH_BOOKINGS_LATER_SUCCESS,
+  FETCH_BOOKINGS_LATER_FAILED,
   UPDATE_BOOKING,
   CANCEL_BOOKING
 } from "../store/types";
@@ -70,7 +70,7 @@ export const fetchBookingsLater = (uid, role) => (dispatch) => (firebase) => {
       //   }
       // }
       dispatch({
-        type: FETCH_BOOKINGS_SUCCESS,
+        type: FETCH_BOOKINGS_LATER_SUCCESS,
         payload: {
           bookings: bookings.reverse(),
           active: active,
@@ -81,13 +81,13 @@ export const fetchBookingsLater = (uid, role) => (dispatch) => (firebase) => {
       });
       if (tracked) {
         dispatch({
-          type: FETCH_BOOKINGS_SUCCESS,
+          type: FETCH_BOOKINGS_LATER_SUCCESS,
           payload: null
         });
       }
     } else {
       dispatch({
-        type: FETCH_BOOKINGS_FAILED,
+        type: FETCH_BOOKINGS_LATER_FAILED,
         payload: store.getState().languagedata.defaultLanguage.no_bookings,
       });
     }

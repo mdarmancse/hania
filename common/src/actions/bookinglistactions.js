@@ -28,6 +28,8 @@ export const fetchBookings = (uid, role) => (dispatch) => (firebase) => {
       const data = snapshot.val();
       const active = [];
       let tracked = null;
+      console.log('data');
+      console.log(data);
       const bookings = Object.keys(data)
         .map((i) => {
           data[i].id = i;
