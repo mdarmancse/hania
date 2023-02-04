@@ -48,18 +48,18 @@ export default function Bklist(props) {
     const onPressAccept = (item) => {
 
         // console.log("auth", auth.info);
-
+     
         let wallet_balance = parseFloat(auth.info.profile.walletBalance);
         if (!settings.negativeBalance && wallet_balance <= 0) {
             if(appcat == 'delivery' && item.prepaid && item.payment_mode == 'card'){
                 dispatch(acceptTask(auth.info, item));
                 setSelectedItem(null);
                 setModalVisible(null);
-                setTimeout(() => {
+                // setTimeout(() => {
                    // props.navigation.navigate('BookedCab', { bookingId: item.id });
                     navigation.navigate('BookedCab',{ bookingId: item.id });
 
-                }, 3000)
+                // }, 3000)
             } else{
                 Alert.alert(
                     t('alert'),
@@ -72,10 +72,10 @@ export default function Bklist(props) {
                 dispatch(acceptTask(auth.info, item));
                 setSelectedItem(null);
                 setModalVisible(null);
-                setTimeout(() => {
+                // setTimeout(() => {
                     navigation.navigate('BookedCab',{ bookingId: item.id });
                    // props.navigation.navigate('BookedCab', { bookingId: item.id });
-                }, 3000)
+                // }, 3000)
             } else{
                 Alert.alert(
                     t('alert'),
@@ -100,10 +100,10 @@ let new_item = {...item, status: "ACCEPTED"};
 
             setSelectedItem(null);
             setModalVisible(null);
-            setTimeout(() => {
+            // setTimeout(() => {
                 navigation.navigate('BookedCab',{ bookingId: item.id });
                // props.navigation.navigate('BookedCab', { bookingId: item.id });
-            }, 3000)
+            // }, 3000)
         }
     };
 
