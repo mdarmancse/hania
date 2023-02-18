@@ -1,7 +1,6 @@
 {
   "name": "mobile-app",
   "version": "1.0.0",
-  "main": "__generated__/AppEntry.js",
   "private": true,
   "scripts": {
     "start": "expo start",
@@ -34,6 +33,7 @@
     "expo-localization": "~12.0.0",
     "expo-location": "~14.0.1",
     "expo-notifications": "~0.14.0",
+    "expo-splash-screen": "~0.14.1",
     "expo-task-manager": "~10.1.0",
     "expo-updates": "~0.11.7",
     "firebase": "8.10.1",

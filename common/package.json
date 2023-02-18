@@ -5,10 +5,15 @@
   "private": true,
   "main": "dist/index.js",
   "dependencies": {
+    "babel-preset-expo": "1.0.0",
+    "expo-yarn-workspaces": "1.4.1",
     "firebase": "8.10.1",
+    "moment": "2.29.4",
     "react": "17.0.1",
     "react-dom": "17.0.1",
+    "react-native": "0.71.3",
     "react-native-base64": "^0.2.1",
+    "react-native-star-rating": "1.0.8",
     "redux": "^4.0.5",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0"
@@ -22,7 +27,7 @@
     "@babel/preset-env": "^7.11.0",
     "@babel/preset-react": "^7.10.4",
     "babel-loader": "^8.1.0",
-    "webpack": "^4.44.2",
+    "webpack": "^5.75.0",
     "webpack-cli": "^3.3.12"
   },
   "eslintConfig": {

@@ -1,15 +1,28 @@
 {
-    "cli": {
-      "version": ">= 0.34.0"
+  "build": {
+    "staging": {
+      "android": {
+        "releaseChannel": "staging",
+        "buildType": "apk"
+      },
+      "ios": {
+        "releaseChannel": "staging"
+      },
+      "env": {
+        "ENTRY_FILE": "./__generated__/AppEntry.js"
+      }
     },
-    "submit": {
-      "production": {
-        
-        "ios": {
-          "appleId": "haniavitedz@gmail.com",
-          "ascAppId": "1623399728",
-          "appleTeamId": "358F2F6MA9"
-        }
+    "production": {
+      "android": {
+        "releaseChannel": "production",
+        "buildType": "apk"
+      },
+      "ios": {
+        "releaseChannel": "production"
+      },
+      "env": {
+        "ENTRY_FILE": "./__generated__/AppEntry.js"
       }
     }
   }
+}

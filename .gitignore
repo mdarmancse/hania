@@ -3,7 +3,6 @@ node_modules
 /.firebase
 .expo
 .pnp.js
-__generated__
 /coverage
 build
 .DS_Store

@@ -5,6 +5,13 @@ export default {
     name: AppConfig.app_name,
     description: AppConfig.app_description,
     slug: AppConfig.app_name.replace(/ /g,"-").toLowerCase(),
+    extra: {
+        eas: {
+            projectId: "9676901a-8be7-4c7f-b2aa-ca40cc8c501f"
+        }
+    },
+    "sdkVersion": "44.0.0",
+    "runtimeVersion": "44.0.0",
     privacy: "public",
     platforms: [
         "ios",
@@ -22,71 +29,16 @@ export default {
         "backgroundColor": "#ffffff"
     },
     updates: {
-        "fallbackToCacheTimeout": 0,
-        "url": "https://u.expo.dev/${9676901a-8be7-4c7f-b2aa-ca40cc8c501f}"
+        enabled: true,
+        "fallbackToCacheTimeout": 0
     },
-
     assetBundlePatterns: [
         "**/*"
     ],
     packagerOpts: {
         config: "metro.config.js"
     },
-
-
-    "build": {
-    "preview": {
-        "android": {
-            "buildType": "apk"
-        }
-    },
-    "preview2": {
-        "android": {
-            "gradleCommand": ":app:assembleRelease"
-        }
-    },
-    "preview3": {
-        "developmentClient": true
-    },
-    "production": {}
-},
-
-
-    expo: {
-        name: AppConfig.app_name,
-        description: AppConfig.app_description,
-        slug: AppConfig.app_name.replace(/ /g,"-").toLowerCase(),
-      extra: {
-        eas: {
-          projectId: "9676901a-8be7-4c7f-b2aa-ca40cc8c501f"
-        }
-      },
-        "updates": {
-            "url": "https://u.expo.dev/9676901a-8be7-4c7f-b2aa-ca40cc8c501f"
-        },
-
-        "runtimeVersion": {
-            "policy":"sdkVersion",
-        },
-        "android": {
-            "runtimeVersion": "1.0.0",
-            "package": AppConfig.app_identifier,
-
-        },
-        "ios": {
-            "policy": "appVersion"
-        }
-    },
-
-
-
-
-
-
     ios: {
-
-
-
         supportsTablet: true,
         usesAppleSignIn: true,
         bundleIdentifier: AppConfig.app_identifier,
@@ -109,9 +61,6 @@ export default {
         buildNumber: AppConfig.ios_app_version
     },
     android: {
-     //   package: "com.mdarmancse.mobileapp",
-        "runtimeVersion": "1.0.0",
-
         package: AppConfig.app_identifier,
         versionCode: AppConfig.android_app_version,
         permissions: [
@@ -134,6 +83,7 @@ export default {
     },
     "facebookScheme": "fb" + AppConfig.facebookAppId,
     "facebookAppId": AppConfig.facebookAppId,
-    "facebookDisplayName": AppConfig.app_name,
-    
+    "facebookDisplayName": AppConfig.app_name
+
+
 }
